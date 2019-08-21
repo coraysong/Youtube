@@ -23,6 +23,8 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationItem.titleView = titleLabel
         collectionView.backgroundColor = .white
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: "CellId")
+        collectionView.contentInset = UIEdgeInsets(top: 50,left: 0,bottom: 0,right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         
         setupMenuBar()
     }
@@ -59,7 +61,6 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         return 0
     }
 }
-
 
 
 
