@@ -23,8 +23,21 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationItem.titleView = titleLabel
         collectionView.backgroundColor = .white
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: "CellId")
+        
+        setupMenuBar()
     }
 
+    let menuBar : MenuBar = {
+        let mb = MenuBar()
+        return mb
+    }()
+    
+    private func setupMenuBar() {
+        view.addSubview(menuBar)
+        view.addConstraintsWithFormat(format: "H:|[v0]|", views: menuBar)
+        view.addConstraintsWithFormat(format: "V:|[v0(50)]|", views: menuBar)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let hegiht = (view.frame.width - 16 - 16) * 9 / 16
