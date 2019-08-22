@@ -29,8 +29,9 @@ class VideoCell: BaseCell {
     var video: Video? {
         didSet {
             titleLabel.text = video?.title
-            if let imageName = video?.thumnailImageName {
-                thumbnailImageView.image = UIImage(named: imageName)
+            if (video?.thumnailImageName) != nil {
+                setupThumbnailImage()
+                setupUserProfileImage()
             }
             
             if let userProfileImage = video?.channel?.profileImageName {
@@ -61,9 +62,20 @@ class VideoCell: BaseCell {
     }
     
     
+    func setupThumbnailImage() {
+        if let thumbnailImageURL = video?.thumnailImageName {
+            self.thumbnailImageView.loadImageUsingUrlString(urlString: thumbnailImageURL)
+        }
+    }
+    
+    func setupUserProfileImage() {
+        if let profileImageName = video?.channel?.profileImageName {
+            self.userProfileImageView.loadImageUsingUrlString(urlString: profileImageName)
+        }
+    }
+    
     let thumbnailImageView:UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .green
         //类扩展中已经添加，这里就不需要了
         //imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -83,8 +95,8 @@ class VideoCell: BaseCell {
     let userProfileImageView:UIImageView = {
         
         let imageView = UIImageView()
-        imageView.backgroundColor = .green
         imageView.layer.cornerRadius = 22
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         return imageView
     }()
