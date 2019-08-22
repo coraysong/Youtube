@@ -74,8 +74,8 @@ class VideoCell: BaseCell {
         }
     }
     
-    let thumbnailImageView:UIImageView = {
-        let imageView = UIImageView()
+    let thumbnailImageView:CustomImageView = {
+        let imageView = CustomImageView()
         //类扩展中已经添加，这里就不需要了
         //imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -92,9 +92,9 @@ class VideoCell: BaseCell {
         return view
     }()
     
-    let userProfileImageView:UIImageView = {
+    let userProfileImageView:CustomImageView = {
         
-        let imageView = UIImageView()
+        let imageView = CustomImageView()
         imageView.layer.cornerRadius = 22
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
