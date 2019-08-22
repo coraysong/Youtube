@@ -95,8 +95,12 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationItem.rightBarButtonItems = [moreButtonItem,searchBarButtonItem]
     }
     
+    let settingsLauncher = SettingsLauncher()
+    
+    
     @objc func handleMore() {
-        print(123)
+        //显示设置选项
+        settingsLauncher.showSettings()
     }
     
     @objc func handleSearch() {

@@ -31,12 +31,10 @@ class VideoCell: BaseCell {
             titleLabel.text = video?.title
             if (video?.thumnailImageName) != nil {
                 setupThumbnailImage()
-                setupUserProfileImage()
             }
             
-            if let userProfileImage = video?.channel?.profileImageName {
-                userProfileImageView.image = UIImage(named: userProfileImage)
-                subtitleLabel.text = video?.channel?.name
+            if (video?.channel?.profileImageName) != nil {
+                setupUserProfileImage()
             }
             
             if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
@@ -56,7 +54,6 @@ class VideoCell: BaseCell {
                     titleLabelConstraint?.constant = 20
                 }
             }
-            
             
         }
     }
