@@ -26,6 +26,41 @@ class BaseCell: UICollectionViewCell {
 
 class VideoCell: BaseCell {
     
+    var video: Video? {
+        didSet {
+            titleLabel.text = video?.title
+            if let imageName = video?.thumnailImageName {
+                thumbnailImageView.image = UIImage(named: imageName)
+            }
+            
+            if let userProfileImage = video?.channel?.profileImageName {
+                userProfileImageView.image = UIImage(named: userProfileImage)
+                subtitleLabel.text = video?.channel?.name
+            }
+            
+            if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
+                let subtitleText = "\(channelName) • \(numberOfViews) • 2 years ago"
+                subtitleLabel.text = subtitleText
+            }
+            
+            //计算titletext
+            if let title = video?.title {
+                let size = CGSize(width: frame.width - 16 - 44 - 8 - 16, height: 1000)
+                let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+                
+                let estimatedRect = NSString(string: title).boundingRect(with: size, options: options,attributes:[NSAttributedString.Key.font:UIFont.systemFont(ofSize: 14)], context: nil)
+                if estimatedRect.size.height > 20 {
+                    titleLabelConstraint?.constant = 44
+                } else {
+                    titleLabelConstraint?.constant = 20
+                }
+            }
+            
+            
+        }
+    }
+    
+    
     let thumbnailImageView:UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .green
@@ -57,18 +92,22 @@ class VideoCell: BaseCell {
     let titleLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "fhajhfdsjhjkafdm,nfmsnf,dsngm,fsng,mfdsngkfdshklfdhslkgjfdklgfdklsjglkdfsjlgsd"
+        label.lineBreakMode = NSLineBreakMode.byTruncatingTail
+//        label.lineBreakMode = .byWordWrapping
+//        label.numberOfLines = 2
         return label
     }()
     
     let subtitleLabel:UITextView = {
         let textView = UITextView()
-        textView.text = "fankfjdsjkfhdskajskljflsdgjfksljgfkldsjgklfdjgklsjklgfjlkgjdklgjkljfklgjsdklgjfdkljgkldfgdgfgffadsgsdgfdsgdgfsdgd"
         textView.textColor = .lightGray
-        textView.textContainerInset = UIEdgeInsets(top: 0,left: -8,bottom: 0,right: 0)
+        textView.textContainerInset = UIEdgeInsets(top: 0,left: -4,bottom: 0,right: 0)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
+    
+    var titleLabelConstraint: NSLayoutConstraint?
+    
     
     override func setupViews() {
         
@@ -97,7 +136,10 @@ class VideoCell: BaseCell {
         //right约束
         addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .right, relatedBy: .equal, toItem: thumbnailImageView, attribute: .right, multiplier: 1, constant: 0))
         //height约束
-        addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 20))
+//        addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 20))
+        
+        titleLabelConstraint = NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 44)
+        addConstraint(titleLabelConstraint!)
         
         //subtitle
         //top 约束

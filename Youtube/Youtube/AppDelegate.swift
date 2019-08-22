@@ -29,12 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(),for: .default)
         
-//        let statusBarBackgroundView = UIView()
-//        statusBarBackgroundView.backgroundColor = UIColor.rgb(red: 194, green: 31, blue: 31)
-//        window?.addSubview(statusBarBackgroundView)
+        let statusBarBackgroundView = UIView()
+        statusBarBackgroundView.backgroundColor = UIColor.rgb(red: 194, green: 31, blue: 31)
+        window?.addSubview(statusBarBackgroundView)
         
-//        window?.addConstraintsWithFormat(format: "H:|[v0]|", views: statusBarBackgroundView)
-//        window?.addConstraintsWithFormat(format: "V:|[v0(20)]", views: statusBarBackgroundView)
+        window?.addConstraintsWithFormat(format: "H:|[v0]|", views: statusBarBackgroundView)
+        let height = application.statusBarFrame.height
+        window?.addConstraintsWithFormat(format: "V:|[v0(\(height))]", views: statusBarBackgroundView)
         
         return true
     }
