@@ -54,7 +54,8 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     func showSettings() {
         //显示设置选项
-        let height:CGFloat = CGFloat(settings.count) * cellHeight
+        let safeInset = UIApplication.shared.keyWindow?.safeAreaInsets.bottom
+        let height:CGFloat = CGFloat(settings.count) * cellHeight + CGFloat(safeInset ?? 0)
         let y: CGFloat = UIScreen.main.bounds.height - height
         if let window = UIApplication.shared.keyWindow {
             blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
