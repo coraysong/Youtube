@@ -16,6 +16,8 @@
 		BA8BC837230D13F4006EBDEB /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BC836230D13F4006EBDEB /* VideoCell.swift */; };
 		BA8BC83B230D22C1006EBDEB /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BC83A230D22C1006EBDEB /* MenuBar.swift */; };
 		BA8BC83E230D87AA006EBDEB /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BC83D230D87AA006EBDEB /* Video.swift */; };
+		BA8BC840230ED2E7006EBDEB /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BC83F230ED2E7006EBDEB /* SettingsLauncher.swift */; };
+		BA8BC842230EE166006EBDEB /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BC841230EE166006EBDEB /* SettingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		BA8BC836230D13F4006EBDEB /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		BA8BC83A230D22C1006EBDEB /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		BA8BC83D230D87AA006EBDEB /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		BA8BC83F230ED2E7006EBDEB /* SettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
+		BA8BC841230EE166006EBDEB /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,7 @@
 			children = (
 				BA8BC836230D13F4006EBDEB /* VideoCell.swift */,
 				BA8BC83A230D22C1006EBDEB /* MenuBar.swift */,
+				BA8BC841230EE166006EBDEB /* SettingCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				BA8BC822230CEC96006EBDEB /* HomeController.swift */,
+				BA8BC83F230ED2E7006EBDEB /* SettingsLauncher.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -181,7 +187,9 @@
 			files = (
 				BA8BC823230CEC96006EBDEB /* HomeController.swift in Sources */,
 				BA8BC83E230D87AA006EBDEB /* Video.swift in Sources */,
+				BA8BC842230EE166006EBDEB /* SettingCell.swift in Sources */,
 				BA8BC837230D13F4006EBDEB /* VideoCell.swift in Sources */,
+				BA8BC840230ED2E7006EBDEB /* SettingsLauncher.swift in Sources */,
 				BA8BC834230D1262006EBDEB /* Extensions.swift in Sources */,
 				BA8BC821230CEC96006EBDEB /* AppDelegate.swift in Sources */,
 				BA8BC83B230D22C1006EBDEB /* MenuBar.swift in Sources */,
