@@ -95,7 +95,12 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationItem.rightBarButtonItems = [moreButtonItem,searchBarButtonItem]
     }
     
-    let settingsLauncher = SettingsLauncher()
+    lazy var settingsLauncher: SettingsLauncher = {
+       
+        let launcher = SettingsLauncher()
+        launcher.homeController = self
+        return launcher
+    }()
     
     
     @objc func handleMore() {
@@ -105,6 +110,16 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     @objc func handleSearch() {
         print(123)
+    }
+    
+    func showControllerForSettings(setting: Setting) {
+        
+        let dummyController = UIViewController()
+        dummyController.view.backgroundColor = .white
+        dummyController.navigationItem.title = setting.name
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.pushViewController(dummyController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

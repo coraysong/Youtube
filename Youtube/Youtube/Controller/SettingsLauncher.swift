@@ -23,6 +23,8 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     let cellId = "cellId"
     let cellHeight: CGFloat = 50
     
+    var homeController: HomeController?
+    
     
     let settings: [Setting] = {
         return [
@@ -56,11 +58,9 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
         let y: CGFloat = UIScreen.main.bounds.height - height
         if let window = UIApplication.shared.keyWindow {
             blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDissmiss)))
+            blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handle)))
             window.addSubview(blackView)
             window.addSubview(collectionView)
-            
-            
             
             collectionView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
             blackView.frame = window.frame
@@ -73,14 +73,25 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
-    @objc func handleDissmiss() {
+    
+    @objc func handle() {
+        handleDissmiss(setting: nil)
+    }
+    
+    @objc func handleDissmiss(setting: Setting?) {
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.blackView.alpha = 0
             if let window = UIApplication.shared.keyWindow {
                 self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-            }
-        })
+                }
+            }, completion: { (_) in
+                if let name = setting?.name {
+                    if name != "Cancel"{
+                        self.homeController?.showControllerForSettings(setting: setting!)
+                    }
+                }
+            })
     }
     
     
@@ -100,6 +111,13 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let setting = settings[indexPath.item]
+        handleDissmiss(setting: setting)
+        
     }
     
     override init() {
