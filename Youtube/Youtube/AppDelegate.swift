@@ -20,9 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let layOut = UICollectionViewFlowLayout()
-        
-        window?.rootViewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layOut))
+        let layout = UICollectionViewFlowLayout()
+        window?.rootViewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
         
         //去掉UINavigationBar下面的黑线
         UINavigationBar.appearance().barTintColor = UIColor.rgb(red: 230, green: 32, blue: 31)

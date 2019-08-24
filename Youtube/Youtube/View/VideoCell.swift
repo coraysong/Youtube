@@ -61,13 +61,15 @@ class VideoCell: BaseCell {
     
     func setupThumbnailImage() {
         if let thumbnailImageURL = video?.thumnailImageName {
-            self.thumbnailImageView.loadImageUsingUrlString(urlString: thumbnailImageURL)
+            self.thumbnailImageView.sd_setImage(with: URL(string: thumbnailImageURL))
+//            self.thumbnailImageView.loadImageUsingUrlString(urlString: thumbnailImageURL)
         }
     }
     
     func setupUserProfileImage() {
         if let profileImageName = video?.channel?.profileImageName {
-            self.userProfileImageView.loadImageUsingUrlString(urlString: profileImageName)
+            self.userProfileImageView.sd_setImage(with: URL(string: profileImageName))
+            //self.userProfileImageView.loadImageUsingUrlString(urlString: profileImageName)
         }
     }
     
@@ -138,17 +140,15 @@ class VideoCell: BaseCell {
         //top 约束
         addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: thumbnailImageView, attribute: .bottom, multiplier: 1, constant: 8))
         
-        addConstraintsWithFormat(format: "V:[v0(20)]", views: titleLabel)
+//        addConstraintsWithFormat(format: "V:[v0(20)]", views: titleLabel)
         
         //left约束
         addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .left, relatedBy: .equal, toItem: userProfileImageView, attribute: .right, multiplier: 1, constant: 8))
         //right约束
         addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .right, relatedBy: .equal, toItem: thumbnailImageView, attribute: .right, multiplier: 1, constant: 0))
         //height约束
-//        addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 20))
+        addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 20))
         
-        titleLabelConstraint = NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 44)
-        addConstraint(titleLabelConstraint!)
         
         //subtitle
         //top 约束

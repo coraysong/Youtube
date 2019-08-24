@@ -10,8 +10,6 @@ import UIKit
 
 class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
-    
-    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -20,6 +18,9 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         cv.delegate = self
         return cv
     }()
+    
+    
+    var homeController: HomeController?
     
     
     let imageNames = ["home","trending","subscriptions","account"]
@@ -52,8 +53,6 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         horizontalBar.translatesAutoresizingMaskIntoConstraints = false
         addSubview(horizontalBar)
         
-        
-        
         horizontalBarConstraint = horizontalBar.leftAnchor.constraint(equalTo: self.leftAnchor)
         horizontalBarConstraint?.isActive = true
         horizontalBar.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -66,9 +65,11 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         let x = CGFloat(indexPath.item) * frame.width * 0.25
         horizontalBarConstraint?.constant = x
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.layoutIfNeeded()
-        }, completion: nil)
+//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//            self.layoutIfNeeded()
+//        }, completion: nil)
+        
+        homeController?.scrollToMenuIndex(menuIndex: indexPath.item)
         
     }
     
