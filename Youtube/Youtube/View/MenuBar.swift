@@ -39,6 +39,37 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         let selectedIndexPath = NSIndexPath(item:0,section:0)
         
         collectionView.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
+        
+        setUpHorizontalBar()
+    }
+    
+    var horizontalBarConstraint: NSLayoutConstraint?
+    
+    
+    func setUpHorizontalBar() {
+        let horizontalBar = UIView()
+        horizontalBar.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        horizontalBar.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(horizontalBar)
+        
+        
+        
+        horizontalBarConstraint = horizontalBar.leftAnchor.constraint(equalTo: self.leftAnchor)
+        horizontalBarConstraint?.isActive = true
+        horizontalBar.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        horizontalBar.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.24).isActive = true
+        horizontalBar.heightAnchor.constraint(equalToConstant: 8).isActive = true
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let x = CGFloat(indexPath.item) * frame.width * 0.25
+        horizontalBarConstraint?.constant = x
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.layoutIfNeeded()
+        }, completion: nil)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -101,3 +132,4 @@ class MenuCell: BaseCell {
     }
     
 }
+
