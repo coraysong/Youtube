@@ -12,10 +12,19 @@ class Setting: NSObject {
     let name: String
     let imageName: String
     
-    init(name: String, imageName: String) {
-        self.name = name
+    init(name: SettingName, imageName: String) {
+        self.name = name.rawValue
         self.imageName = imageName
     }
+}
+
+enum SettingName: String{
+    case Cancel = "Cancel"
+    case Setting = "Settings"
+    case TermPrivacy = "Terms & privacy policy"
+    case FeedBack = "Send Feedback"
+    case Help = "Help"
+    case SwitchAccount = "Switch Account"
 }
 
 class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -28,12 +37,12 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     let settings: [Setting] = {
         return [
-            Setting(name: "Settings", imageName: "settings"),
-            Setting(name: "Terms & privacy policy", imageName: "privacy"),
-            Setting(name: "Send Feedback", imageName: "feedback"),
-            Setting(name: "Help", imageName: "help"),
-            Setting(name: "Switch Account", imageName: "switch_account"),
-            Setting(name: "Cancel", imageName: "cancel")
+            Setting(name: SettingName.Setting, imageName: "settings"),
+            Setting(name: SettingName.TermPrivacy, imageName: "privacy"),
+            Setting(name: SettingName.FeedBack, imageName: "feedback"),
+            Setting(name: SettingName.Help, imageName: "help"),
+            Setting(name: SettingName.SwitchAccount, imageName: "switch_account"),
+            Setting(name: SettingName.Cancel, imageName: "cancel")
         ]
     }()
     
