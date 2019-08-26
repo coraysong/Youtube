@@ -10,22 +10,14 @@ import UIKit
 import SDWebImage
 
 class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-    
-    var videos: [Video]?
+
     let cellId = "CellId"
     
-    func fetchVideos() {
-        
-        APIService.shareInstance.fetchVideos { (videos:[Video]) in
-            self.videos = videos
-            self.collectionView.reloadData()
-        }
-    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        fetchVideos()
         navigationController?.navigationBar.isTranslucent = false
         
         let titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: view.frame.width - 32,height: view.frame.height))
@@ -55,9 +47,8 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         }
         
         collectionView.backgroundColor = .white
-//        collectionView.register(VideoCell.self, forCellWithReuseIdentifier: "CellId")
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
         
         collectionView.contentInset = UIEdgeInsets(top: 50,left: 0,bottom: 0,right: 0)
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
@@ -112,7 +103,9 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     func scrollToMenuIndex(menuIndex:Int) {
         
         let index = NSIndexPath(item: menuIndex, section: 0)
-        collectionView.scrollToItem(at: index as IndexPath, at: [], animated: true)
+        collectionView.scrollToItem(at: index as IndexPath, at: .centeredHorizontally, animated: true)
+        
+        setTitleForIndex(index: index.item)
     }
     
     
@@ -127,54 +120,41 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        let color: [UIColor] = [UIColor.blue,UIColor.red,UIColor.yellow,UIColor.purple]
-        cell.backgroundColor = color[indexPath.item]
+//        let color: [UIColor] = [UIColor.blue,UIColor.red,UIColor.yellow,UIColor.purple]
+//        cell.backgroundColor = color[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        return CGSize(width: view.frame.width, height: view.frame.height - 50)
     }
+    
+    let titles = ["Home","Trending","Subscriptions","Account"]
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        
         let index = NSIndexPath(item: Int(targetContentOffset.pointee.x / view.frame.width), section: 0)
-        menuBar.collectionView.selectItem(at: index as IndexPath, animated: true, scrollPosition: [])
+        menuBar.collectionView.selectItem(at: index as IndexPath, animated: true, scrollPosition: .centeredHorizontally)
+        setTitleForIndex(index: index.item)
         
     }
     
-//    func showControllerForSettings(setting: Setting) {
+    private func setTitleForIndex(index: Int) {
+        if let titleLabel = navigationItem.titleView as? UILabel{
+            titleLabel.text = titles[index]
+        }
+    }
+    
+    func showControllerForSettings(setting: Setting) {
+
+        let dummyController = UIViewController()
+        dummyController.view.backgroundColor = .white
+        dummyController.navigationItem.title = setting.name
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.pushViewController(dummyController, animated: true)
+    }
 //
-//        let dummyController = UIViewController()
-//        dummyController.view.backgroundColor = .white
-//        dummyController.navigationItem.title = setting.name
-//        navigationController?.navigationBar.tintColor = .white
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-//        navigationController?.pushViewController(dummyController, animated: true)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        let hegiht = (view.frame.width - 16 - 16) * 9 / 16
-//
-//        return .init(width: view.frame.size.width, height: hegiht + 16 + 68)
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return videos?.count ?? 0
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath) as! VideoCell
-//        cell.video = videos?[indexPath.item]
-//        return cell
-//
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
 }
 
 
