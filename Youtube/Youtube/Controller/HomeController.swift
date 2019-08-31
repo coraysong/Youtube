@@ -12,6 +12,8 @@ import SDWebImage
 class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
 
     let cellId = "CellId"
+    let trendingCellId = "trendingCellId"
+    let subscriptionCellId = "subscriptionCellId"
     
     
     
@@ -49,8 +51,11 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         collectionView.backgroundColor = .white
         
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(TrendingCell.self, forCellWithReuseIdentifier: trendingCellId)
+        collectionView.register(SubscriptionCell.self, forCellWithReuseIdentifier: subscriptionCellId)
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
-        collectionView.contentInset = UIEdgeInsets(top: 50,left: 0,bottom: 0,right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 50 + statusBarHeight - 10 ,left: 0,bottom: 0,right: 0)
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView.isPagingEnabled = true
     }
@@ -70,6 +75,8 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         view.addConstraintsWithFormat(format: "V:[v0(50)]", views: menuBar)
         
         menuBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        
+        print(view.safeAreaInsets)
     }
     
     private func setupNavBarButtons() {
@@ -119,9 +126,19 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-//        let color: [UIColor] = [UIColor.blue,UIColor.red,UIColor.yellow,UIColor.purple]
-//        cell.backgroundColor = color[indexPath.item]
+        
+        
+        let identifier: String
+        
+        if indexPath.item == 1 {
+            identifier = trendingCellId
+        }else if indexPath.item == 2 {
+            identifier = subscriptionCellId
+        }else {
+            identifier = cellId
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
         return cell
     }
     

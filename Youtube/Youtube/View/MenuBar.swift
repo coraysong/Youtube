@@ -62,6 +62,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         let x = CGFloat(indexPath.item) * frame.width * 0.25
         horizontalBarConstraint?.constant = x
         
