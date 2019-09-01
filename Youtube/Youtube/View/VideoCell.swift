@@ -29,7 +29,7 @@ class VideoCell: BaseCell {
     var video: Video? {
         didSet {
             titleLabel.text = video?.title
-            if (video?.thumnailImageName) != nil {
+            if (video?.thumbnailImageName) != nil {
                 setupThumbnailImage()
             }
             
@@ -60,7 +60,7 @@ class VideoCell: BaseCell {
     
     
     func setupThumbnailImage() {
-        if let thumbnailImageURL = video?.thumnailImageName {
+        if let thumbnailImageURL = video?.thumbnailImageName {
             self.thumbnailImageView.sd_setImage(with: URL(string: thumbnailImageURL))
 //            self.thumbnailImageView.loadImageUsingUrlString(urlString: thumbnailImageURL)
         }

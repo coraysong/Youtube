@@ -171,7 +171,7 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.pushViewController(dummyController, animated: true)
     }
-//
+    
 }
 
 

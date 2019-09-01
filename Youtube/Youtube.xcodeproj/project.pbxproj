@@ -23,6 +23,7 @@
 		BA8BC8452311288C006EBDEB /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BC8442311288C006EBDEB /* APIService.swift */; };
 		BAF9F8EE231A42C00015B548 /* TrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF9F8ED231A42C00015B548 /* TrendingCell.swift */; };
 		BAF9F8F0231A4D490015B548 /* SubscriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF9F8EF231A4D490015B548 /* SubscriptionCell.swift */; };
+		BAF9F8F2231A71A90015B548 /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF9F8F1231A71A90015B548 /* VideoLauncher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		BA8BC8442311288C006EBDEB /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		BAF9F8ED231A42C00015B548 /* TrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCell.swift; sourceTree = "<group>"; };
 		BAF9F8EF231A4D490015B548 /* SubscriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCell.swift; sourceTree = "<group>"; };
+		BAF9F8F1231A71A90015B548 /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				BA8BC833230D1262006EBDEB /* Extensions.swift */,
+				BAF9F8F1231A71A90015B548 /* VideoLauncher.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				BA8BC842230EE166006EBDEB /* SettingCell.swift in Sources */,
 				BA8BC837230D13F4006EBDEB /* VideoCell.swift in Sources */,
 				BA8BC840230ED2E7006EBDEB /* SettingsLauncher.swift in Sources */,
+				BAF9F8F2231A71A90015B548 /* VideoLauncher.swift in Sources */,
 				BA8BC834230D1262006EBDEB /* Extensions.swift in Sources */,
 				BA8BC821230CEC96006EBDEB /* AppDelegate.swift in Sources */,
 				BA8BC8452311288C006EBDEB /* APIService.swift in Sources */,

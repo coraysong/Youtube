@@ -41,26 +41,10 @@ class APIService: NSObject {
                     return
                 }
                 do{
-                    
-                    let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-                    
-                    var videos = [Video]()
-                    
-                    for dictionary in  json as! [[String:AnyObject]] {
-                        let video = Video()
-                        video.title = dictionary["title"]! as? String
-                        video.thumnailImageName = dictionary["thumbnail_image_name"] as? String
-                        
-                        let channelDict = dictionary["channel"] as? [String:AnyObject]
-                        
-                        let channel = Channel()
-                        channel.name = channelDict!["name"] as? String
-                        channel.profileImageName = channelDict!["profile_image_name"] as? String
-                        
-                        video.channel = channel
-                        
-                        videos.append(video)
-                    }
+                    guard let data = data else { return }
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let videos = try decoder.decode([Video].self, from: data)
                     
                     DispatchQueue.main.async {
                         complete(videos)
