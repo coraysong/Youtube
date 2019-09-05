@@ -47,10 +47,6 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     }()
     
     
-    
-    //    let y:CGFloat = UIScreen.main.bounds.height - height!
-    
-    
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -104,7 +100,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
             })
     }
     
-    
+    // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return settings.count
     }
@@ -115,6 +111,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
         return cell
     }
     
+    // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.size.width, height: cellHeight)
     }
@@ -123,6 +120,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
         return 0
     }
     
+    // MARK: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let setting = settings[indexPath.item]

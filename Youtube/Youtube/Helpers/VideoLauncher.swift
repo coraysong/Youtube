@@ -9,7 +9,16 @@
 import UIKit
 import AVFoundation
 
+protocol PlayerVCDelegate {
+    
+    func tap()
+    func didMinimize()
+}
+
+
 class VideoPlayerView: UIView {
+    
+    var delegate: PlayerVCDelegate?
     
     let activityIndicatorView: UIActivityIndicatorView = {
         
@@ -43,7 +52,7 @@ class VideoPlayerView: UIView {
     }()
     
     let videoLengthlabel: UILabel = {
-       
+        
         let label = UILabel()
         label.text = "00:00"
         label.textAlignment = .right
@@ -94,6 +103,7 @@ class VideoPlayerView: UIView {
     let controlsContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 1)
+        
         return view
     }()
     
@@ -137,10 +147,18 @@ class VideoPlayerView: UIView {
         
         backgroundColor = .black
         
+        let panGesture = UIPanGestureRecognizer(target: self, action:#selector(handlePanGesture))
+        addGestureRecognizer(panGesture)
+        
     }
     
     var player: AVPlayer?
     
+    
+    @objc func handlePanGesture (){
+        
+        delegate?.didMinimize()
+    }
     
     func setupPlayerView() {
         let urlstring = "https://media.w3.org/2010/05/sintel/trailer.mp4"
@@ -181,6 +199,7 @@ class VideoPlayerView: UIView {
             isPlaying = true
             if let duration = player?.currentItem?.duration {
                 let seconds = CMTimeGetSeconds(duration)
+                //这里出现一次seconds为naN bug 没再重现，有时间解决
                 let secondsText = Int(seconds) % 60
                 let minutesText = String(format: "%02d", Int(seconds) / 60)
                 videoLengthlabel.text = "\(minutesText):\(secondsText)"
@@ -202,33 +221,66 @@ class VideoPlayerView: UIView {
     }
 }
 
-class VideoLauncher: NSObject {
+class VideoLauncher: NSObject, PlayerVCDelegate {
+    
+    
+    
+    var view: UIView?
+    var videoPlayerView: VideoPlayerView?
+    
+    func tap() {
+        print("点了")
+    }
+    func didMinimize() {
+        if let view = self.view {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                let screenFrame = UIScreen.main.bounds.size
+                let height = screenFrame.width * 9 / 16
+                
+                let frame = CGRect(x: 0, y: screenFrame.height - height - 10, width: screenFrame.width, height: height)
+                view.frame = frame
+            }) { (completedAnimation) in
+                UIApplication.shared.setStatusBarHidden(false, with: .fade)
+            }
+        }
+    }
     func showVideoPlayer() {
         print("showing video player animation...")
         
         if let keyWindow = UIApplication.shared.keyWindow {
-            let view = UIView(frame: keyWindow.frame)
-            view.backgroundColor = .white
-            
-            view.frame = CGRect(x: keyWindow.frame.width - 10, y: keyWindow.frame.height - 10, width: 10, height: 10)
-            
-            
-            let height = keyWindow.frame.width * 9 / 16
-            
-            let videoPlayerFrame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
-            
-            let videoPlayerView = VideoPlayerView(frame: videoPlayerFrame)
-            
-            view.addSubview(videoPlayerView)
-            
-            keyWindow.addSubview(view)
-            
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                view.frame = keyWindow.frame
-            }) { (completedAnimation) in
-                UIApplication.shared.setStatusBarHidden(true, with: .fade)
+            view = UIView(frame: keyWindow.frame)
+            if let view = view{
+                view.backgroundColor = .white
+                
+                view.frame = CGRect(x: keyWindow.frame.width - 10, y: keyWindow.frame.height - 10, width: 10, height: 10)
+                
+                let height = keyWindow.frame.width * 9 / 16
+                
+                let videoPlayerFrame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+                
+                videoPlayerView = VideoPlayerView(frame: videoPlayerFrame)
+                if let videoPlayerView = videoPlayerView {
+                    videoPlayerView.delegate = self
+                    view.addSubview(videoPlayerView)
+                }
+                
+                keyWindow.addSubview(view)
+                viewAnimation(view: view)
+                
             }
-            
         }
     }
+}
+
+
+func viewAnimation(view: UIView) {
+    
+    if let keyWindow = UIApplication.shared.keyWindow{
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            view.frame = keyWindow.frame
+        }) { (completedAnimation) in
+            UIApplication.shared.setStatusBarHidden(true, with: .fade)
+        }
+    }
+    
 }

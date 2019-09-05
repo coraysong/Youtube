@@ -36,12 +36,12 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     lazy var menuBar : MenuBar = {
         let mb = MenuBar()
         mb.homeController = self
+        mb.translatesAutoresizingMaskIntoConstraints = false
         return mb
     }()
     
     
     func setupCollectionView() {
-        
         
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -54,7 +54,7 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         collectionView.register(TrendingCell.self, forCellWithReuseIdentifier: trendingCellId)
         collectionView.register(SubscriptionCell.self, forCellWithReuseIdentifier: subscriptionCellId)
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 50 + statusBarHeight - 10 ,left: 0,bottom: 0,right: 0)
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView.isPagingEnabled = true
@@ -116,11 +116,7 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        menuBar.horizontalBarConstraint?.constant = scrollView.contentOffset.x * 0.25
-    }
-    
+    // MARK: UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
@@ -141,12 +137,18 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
         return cell
     }
-    
+    // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: view.frame.height - 50)
     }
     
     let titles = ["Home","Trending","Subscriptions","Account"]
+    
+    // MARK: UIScrollViewDelegate
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        menuBar.horizontalBarConstraint?.constant = scrollView.contentOffset.x * 0.25
+    }
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
